@@ -8,7 +8,7 @@ import re
 
 username =  os.popen("whoami").read().strip()
 
-skypenames = os.popen("ls /home/bacon/.Skype/ | grep -v 'DbTemp\|shared_\|shared.'").read().strip()
+skypenames = os.popen("ls /home/"+username+"/.Skype/ | grep -v 'DbTemp\|shared_\|shared.'").read().strip()
 existnames = string.split(skypenames,'\n')
 print (25 * '-')
 print (" List of Skype accounts:")
@@ -41,4 +41,4 @@ if  match:
                 sql ="CREATE TRIGGER IF NOT EXISTS undo_delete_message BEFORE UPDATE OF body_xml ON Messages FOR EACH ROW WHEN NEW.body_xml = '' BEGIN SELECT CASE WHEN (NEW.body_xml = '' AND NEW.author != '" + existnames[choice] + "') THEN RAISE(ROLLBACK, '42') END; END;"
 		cursor = conn.execute(sql)
 		if cursor:
-			print 'From now you can see all delited messages.'
+			print 'From now you can see all deleted messages. You need only restart your Skype, and after it This message has been removed. will be replaced to deleted messagess.'
